@@ -1,0 +1,29 @@
+{
+  "products": [
+    { "id": 1, "sku": "INV-A104", "name": "Pallet Jack 2500kg", "category": "Equipment", "price": 389.99, "stock": 4, "locations": ["Aisle 1", "Dock B"] },
+    { "id": 2, "sku": "INV-B220", "name": "Stretch Wrap Roll 500mm", "category": "Packaging", "price": 18.5, "stock": 120, "locations": ["Aisle 3"] },
+    { "id": 3, "sku": "INV-C315", "name": "Corrugated Box 60x40x40", "category": "Packaging", "price": 1.75, "stock": 340, "locations": ["Aisle 3", "Aisle 4"] },
+    { "id": 4, "sku": "INV-D402", "name": "Handheld Barcode Scanner", "category": "Electronics", "price": 149, "stock": 12, "locations": ["Office Cage"] },
+    { "id": 5, "sku": "INV-E518", "name": "Safety Helmet (Yellow)", "category": "Safety", "price": 22.9, "stock": 8, "locations": ["Aisle 6"] },
+    { "id": 6, "sku": "INV-F603", "name": "Hi-Vis Safety Vest", "category": "Safety", "price": 9.99, "stock": 45, "locations": ["Aisle 6"] },
+    { "id": 7, "sku": "INV-G7K1", "name": "Steel Shelving Unit 2m", "category": "Storage", "price": 275, "stock": 18, "locations": ["Aisle 8", "Overflow Zone"] },
+    { "id": 8, "sku": "INV-H809", "name": "Packing Tape 48mm", "category": "Packaging", "price": 2.4, "stock": 22, "locations": ["Aisle 3"] },
+    { "id": 9, "sku": "INV-J912", "name": "Thermal Label Printer", "category": "Electronics", "price": 219.5, "stock": 3, "locations": ["Office Cage"] },
+    { "id": 10, "sku": "INV-K0Z7", "name": "Plastic Storage Bin 40L", "category": "Storage", "price": 14.25, "stock": 64, "locations": ["Aisle 8"] }
+  ],
+  "shipments": [
+    { "id": 1, "trackingNo": "LF-100234", "destination": "Berlin, DE", "status": "Pending", "eta": "2026-10-28" },
+    { "id": 2, "trackingNo": "LF-100235", "destination": "Rotterdam, NL", "status": "In Transit", "eta": "2026-10-23" },
+    { "id": 3, "trackingNo": "LF-100236", "destination": "Lyon, FR", "status": "Delivered", "eta": "2026-10-15" },
+    { "id": 4, "trackingNo": "LF-100237", "destination": "Milan, IT", "status": "Delayed", "eta": "2026-10-19" },
+    { "id": 5, "trackingNo": "LF-100238", "destination": "Warsaw, PL", "status": "In Transit", "eta": "2026-10-24" },
+    { "id": 6, "trackingNo": "LF-100239", "destination": "Madrid, ES", "status": "Delivered", "eta": "2026-10-12" }
+  ],
+  "suppliers": [
+    { "id": 1, "name": "Northline Packaging Co.", "contactName": "Anna Keller", "email": "anna.keller@northline.example", "phone": "+49 30 555 0101" },
+    { "id": 2, "name": "SafeWork Supplies", "contactName": "Tom Becker", "email": "tom.becker@safework.example", "phone": "+31 10 555 0202" },
+    { "id": 3, "name": "ScanTech Devices", "contactName": "Lucia Romano", "email": "lucia.romano@scantech.example", "phone": "+39 02 555 0303" },
+    { "id": 4, "name": "SteelRack Systems", "contactName": "Piotr Nowak", "email": "piotr.nowak@steelrack.example", "phone": "+48 22 555 0404" },
+    { "id": 5, "name": "LiftPro Equipment", "contactName": "Marie Dubois", "email": "marie.dubois@liftpro.example", "phone": "+33 4 555 0505" }
+  ]
+}
