@@ -1,2 +1,95 @@
-<h1 class="h3 mb-3">Inventory</h1>
-<p class="text-muted">The product list will be shown here.</p>
+<div class="inventory">
+  <div class="inventory__header">
+    <div>
+      <h1 class="h3 mb-1">Inventory</h1>
+      <p class="text-muted mb-0">
+        Total value:
+        <strong>{{ inventory.totalValue() | currency }}</strong>
+        &middot; Low stock:
+        <strong>{{ inventory.lowStockCount() }}</strong>
+      </p>
+    </div>
+
+    <button type="button" class="btn btn-primary" disabled>Add Product</button>
+  </div>
+
+  <div class="row g-2 mb-3">
+    <div class="col-md-6">
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search products..."
+        [formControl]="searchControl"
+      />
+    </div>
+
+    <div class="col-6 col-md-3">
+      <select
+        class="form-select"
+        aria-label="Stock filter"
+        [value]="inventory.stockFilter()"
+        (change)="onFilterChange($event)"
+      >
+        <option value="all">All stock levels</option>
+        <option value="low">Low stock (25 or less)</option>
+        <option value="critical">Critical (below 10)</option>
+      </select>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <select
+        class="form-select"
+        aria-label="Sort by"
+        [value]="inventory.sortBy()"
+        (change)="onSortChange($event)"
+      >
+        <option value="name">Sort by name</option>
+        <option value="price">Sort by price</option>
+        <option value="stock">Sort by stock</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th class="text-end">Price</th>
+          <th class="text-end">Stock</th>
+          <th>Locations</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of inventory.visibleProducts(); track p.id) {
+          <tr [appStockHighlight]="p.stock">
+            <td><code>{{ p.sku }}</code></td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.category }}</td>
+            <td class="text-end">{{ p.price | currency }}</td>
+            <td class="text-end">{{ p.stock }}</td>
+            <td>{{ p.locations.join(', ') }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="inventory__empty">No products found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="inventory__legend">
+    <span class="inventory__legend-item">
+      <span class="inventory__swatch inventory__swatch--critical"></span> Critical (below 10)
+    </span>
+    <span class="inventory__legend-item">
+      <span class="inventory__swatch inventory__swatch--low"></span> Low (10 to 25)
+    </span>
+    <span class="inventory__legend-item">
+      <span class="inventory__swatch"></span> OK (above 25)
+    </span>
+  </div>
+</div>
