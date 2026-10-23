@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 interface NavItem {
   label: string;
@@ -15,6 +16,8 @@ const SMALL_SCREEN_WIDTH = 768;
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent implements OnInit, OnDestroy {
+  private authService = inject(AuthService);
+
   collapsed = signal(false);
 
   navItems: NavItem[] = [
@@ -35,6 +38,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.onResize);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   toggleSidebar(): void {
