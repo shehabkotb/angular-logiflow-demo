@@ -1,2 +1,17 @@
 <h1 class="h3 mb-3">Dashboard</h1>
 <p class="text-muted">Key numbers and recent activity will be shown here.</p>
+
+<div class="row g-3 mb-3">
+  <div class="col-12 col-md-6 col-lg-3">
+    <app-card title="Products" [value]="42" icon="📦" />
+  </div>
+  <div class="col-12 col-md-6 col-lg-3">
+    <app-card title="Shipments in transit" [value]="7" icon="🚚">
+      <small class="text-muted">Sample value</small>
+    </app-card>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" (click)="testNotification()">
+  Test notification
+</button>

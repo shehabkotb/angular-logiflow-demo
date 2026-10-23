@@ -1,0 +1,6 @@
+@if (notificationService.notification$ | async; as message) {
+  <div class="notification-banner alert alert-success alert-dismissible shadow" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  </div>
+}

@@ -1,0 +1,23 @@
+@if (open) {
+  <div class="modal-overlay">
+    <div class="modal-overlay__dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ title }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="onDismiss()"></button>
+        </div>
+
+        <div class="modal-body">
+          <ng-content />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onDismiss()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="onConfirm()">
+            {{ confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { NotificationBannerComponent } from '../shared/notification-banner/notification-banner.component';
 
 interface NavItem {
   label: string;
@@ -11,7 +12,7 @@ const SMALL_SCREEN_WIDTH = 768;
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NotificationBannerComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
