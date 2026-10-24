@@ -10,7 +10,7 @@
       </p>
     </div>
 
-    <button type="button" class="btn btn-primary" disabled>Add Product</button>
+    <button type="button" class="btn btn-primary" (click)="openAddForm()">Add Product</button>
   </div>
 
   <div class="row g-2 mb-3">
@@ -60,6 +60,7 @@
           <th class="text-end">Price</th>
           <th class="text-end">Stock</th>
           <th>Locations</th>
+          <th class="text-end">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -71,10 +72,18 @@
             <td class="text-end">{{ p.price | currency }}</td>
             <td class="text-end">{{ p.stock }}</td>
             <td>{{ p.locations.join(', ') }}</td>
+            <td class="text-end text-nowrap">
+              <button type="button" class="btn btn-sm btn-outline-primary me-1" (click)="openEditForm(p)">
+                Edit
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="askToDelete(p)">
+                Delete
+              </button>
+            </td>
           </tr>
         } @empty {
           <tr>
-            <td colspan="6" class="inventory__empty">No products found.</td>
+            <td colspan="7" class="inventory__empty">No products found.</td>
           </tr>
         }
       </tbody>
@@ -93,3 +102,25 @@
     </span>
   </div>
 </div>
+
+<app-modal
+  [title]="editingProduct ? 'Edit product' : 'Add product'"
+  [open]="formOpen"
+  [showFooter]="false"
+  (dismiss)="closeForm()"
+>
+  <!-- @if so the form is recreated every time the modal opens -->
+  @if (formOpen) {
+    <app-product-form [product]="editingProduct" (save)="onSave($event)" (cancelled)="closeForm()" />
+  }
+</app-modal>
+
+<app-modal
+  title="Delete product"
+  confirmText="Delete"
+  [open]="productToDelete !== null"
+  (confirm)="confirmDelete()"
+  (dismiss)="cancelDelete()"
+>
+  Delete <strong>{{ productToDelete?.name }}</strong>?
+</app-modal>

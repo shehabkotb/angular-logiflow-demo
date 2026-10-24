@@ -10,6 +10,7 @@ export class ModalComponent {
   @Input() title = '';
   @Input() open = false;
   @Input() confirmText = 'Confirm';
+  @Input() showFooter = true;
 
   @Output() confirm = new EventEmitter<void>();
   @Output() dismiss = new EventEmitter<void>();

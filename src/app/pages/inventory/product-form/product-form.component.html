@@ -1,0 +1,138 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label for="sku" class="form-label">SKU</label>
+    <input
+      id="sku"
+      type="text"
+      class="form-control"
+      placeholder="INV-A104"
+      formControlName="sku"
+      [class.is-invalid]="sku.invalid && sku.touched"
+    />
+    @if (sku.invalid && sku.touched) {
+      <div class="invalid-feedback">
+        @if (sku.hasError('required')) {
+          SKU is required.
+        }
+        @if (sku.hasError('skuFormat')) {
+          SKU must look like INV-A104 ("INV-" and 4 letters or digits).
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      id="name"
+      type="text"
+      class="form-control"
+      formControlName="name"
+      [class.is-invalid]="name.invalid && name.touched"
+    />
+    @if (name.invalid && name.touched) {
+      <div class="invalid-feedback">
+        @if (name.hasError('required')) {
+          Name is required.
+        }
+        @if (name.hasError('minlength')) {
+          Name must be at least 3 characters.
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <input
+      id="category"
+      type="text"
+      class="form-control"
+      placeholder="Packaging"
+      formControlName="category"
+      [class.is-invalid]="category.invalid && category.touched"
+    />
+    @if (category.invalid && category.touched) {
+      <div class="invalid-feedback">Category is required.</div>
+    }
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-6">
+      <label for="price" class="form-label">Price</label>
+      <input
+        id="price"
+        type="number"
+        step="0.01"
+        class="form-control"
+        formControlName="price"
+        [class.is-invalid]="price.invalid && price.touched"
+      />
+      @if (price.invalid && price.touched) {
+        <div class="invalid-feedback">
+          @if (price.hasError('required')) {
+            Price is required.
+          }
+          @if (price.hasError('min')) {
+            Price cannot be negative.
+          }
+        </div>
+      }
+    </div>
+
+    <div class="col-6">
+      <label for="stock" class="form-label">Stock</label>
+      <input
+        id="stock"
+        type="number"
+        class="form-control"
+        formControlName="stock"
+        [class.is-invalid]="stock.invalid && stock.touched"
+      />
+      @if (stock.invalid && stock.touched) {
+        <div class="invalid-feedback">
+          @if (stock.hasError('required')) {
+            Stock is required.
+          }
+          @if (stock.hasError('min')) {
+            Stock cannot be negative.
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-3" formArrayName="locations">
+    <div class="form-label">Locations</div>
+
+    @for (location of locations.controls; track location; let i = $index) {
+      <div class="input-group mb-2 has-validation">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Aisle 1"
+          [attr.aria-label]="'Location ' + (i + 1)"
+          [formControlName]="i"
+          [class.is-invalid]="location.invalid && location.touched"
+        />
+        <button type="button" class="btn btn-outline-danger" (click)="removeLocation(i)">
+          Remove
+        </button>
+        @if (location.invalid && location.touched) {
+          <div class="invalid-feedback">Location is required.</div>
+        }
+      </div>
+    } @empty {
+      <p class="text-muted small mb-2">No locations yet.</p>
+    }
+
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addLocation()">
+      + Add location
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>

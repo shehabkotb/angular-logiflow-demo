@@ -11,12 +11,14 @@
           <ng-content />
         </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="onDismiss()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="onConfirm()">
-            {{ confirmText }}
-          </button>
-        </div>
+        @if (showFooter) {
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="onDismiss()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="onConfirm()">
+              {{ confirmText }}
+            </button>
+          </div>
+        }
       </div>
     </div>
   </div>
