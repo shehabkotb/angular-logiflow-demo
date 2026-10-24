@@ -1,0 +1,10 @@
+.suppliers {
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    word-break: break-word;
+  }
+}

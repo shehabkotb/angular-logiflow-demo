@@ -1,2 +1,44 @@
-<h1 class="h3 mb-3">Suppliers</h1>
-<p class="text-muted">The supplier list will be shown here.</p>
+<div class="suppliers">
+  <h1 class="h3 mb-3">Suppliers</h1>
+
+  @if (loading()) {
+    <p class="text-muted">Loading suppliers...</p>
+  } @else if (error()) {
+    <div class="alert alert-danger" role="alert">
+      Could not load data. Is the API running? <code>npm run api</code>
+    </div>
+  } @else {
+    <div class="row g-3">
+      @for (supplier of suppliers(); track supplier.id) {
+        <div class="col-12 col-md-6 col-lg-4">
+          <app-card
+            [title]="supplier.name"
+            icon="🏭"
+            [value]="supplier.contactName"
+            [showEdit]="true"
+            (edit)="openEditForm(supplier)"
+          >
+            <div class="suppliers__contact">
+              <a [href]="'mailto:' + supplier.email">{{ supplier.email }}</a>
+              <span>{{ supplier.phone }}</span>
+            </div>
+          </app-card>
+        </div>
+      } @empty {
+        <p class="text-muted">No suppliers found.</p>
+      }
+    </div>
+  }
+</div>
+
+<app-modal
+  [title]="'Edit ' + (editingSupplier?.name ?? 'supplier')"
+  [open]="editingSupplier !== null"
+  [showFooter]="false"
+  (dismiss)="closeForm()"
+>
+  <!-- @if so the form is recreated every time the modal opens -->
+  @if (editingSupplier) {
+    <app-supplier-form [supplier]="editingSupplier" (save)="onSave($event)" (cancelled)="closeForm()" />
+  }
+</app-modal>

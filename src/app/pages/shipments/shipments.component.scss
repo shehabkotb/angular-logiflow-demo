@@ -1,0 +1,34 @@
+.shipments {
+  &__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__count {
+    display: flex;
+    flex-direction: column;
+    min-width: 8rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    background-color: #fff;
+  }
+
+  &__count-number {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__count-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+
+  &__empty {
+    padding: 2rem;
+    color: #6c757d;
+    text-align: center;
+  }
+}

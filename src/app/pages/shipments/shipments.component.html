@@ -1,2 +1,62 @@
-<h1 class="h3 mb-3">Shipments</h1>
-<p class="text-muted">The shipment list will be shown here.</p>
+<div class="shipments">
+  <h1 class="h3 mb-3">Shipments</h1>
+
+  @if (loading()) {
+    <p class="text-muted">Loading shipments...</p>
+  } @else if (error()) {
+    <div class="alert alert-danger" role="alert">
+      Could not load data. Is the API running? <code>npm run api</code>
+    </div>
+  } @else {
+    <div class="shipments__summary">
+      @for (status of statuses; track status) {
+        <div class="shipments__count">
+          <span class="shipments__count-number">{{ countByStatus(status) }}</span>
+          <span class="shipments__count-label">{{ status }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Tracking no.</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>ETA</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of shipments(); track s.id) {
+            <tr>
+              <td><code>{{ s.trackingNo }}</code></td>
+              <td>{{ s.destination }}</td>
+              <td>
+                @switch (s.status) {
+                  @case ('Pending') {
+                    <span class="badge text-bg-secondary">Pending</span>
+                  }
+                  @case ('In Transit') {
+                    <span class="badge text-bg-primary">In Transit</span>
+                  }
+                  @case ('Delivered') {
+                    <span class="badge text-bg-success">Delivered</span>
+                  }
+                  @case ('Delayed') {
+                    <span class="badge text-bg-danger">Delayed</span>
+                  }
+                }
+              </td>
+              <td>{{ s.eta | date: 'mediumDate' }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="shipments__empty">No shipments found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
