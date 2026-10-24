@@ -1,17 +1,66 @@
-<h1 class="h3 mb-3">Dashboard</h1>
-<p class="text-muted">Key numbers and recent activity will be shown here.</p>
+<div class="dashboard">
+  <h1 class="h3 mb-3">Dashboard</h1>
 
-<div class="row g-3 mb-3">
-  <div class="col-12 col-md-6 col-lg-3">
-    <app-card title="Products" [value]="42" icon="📦" />
+  @if (shipmentsError()) {
+    <div class="alert alert-danger" role="alert">
+      Could not load data. Is the API running? <code>npm run api</code>
+    </div>
+  }
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-6 col-lg-3">
+      <!-- currency pipe can return null -->
+      <app-card
+        title="Inventory value"
+        [value]="(inventory.totalValue() | currency) ?? ''"
+        icon="💰"
+      />
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <app-card title="Low-stock items" [value]="inventory.lowStockCount()" icon="⚠️">
+        <a routerLink="/inventory" class="btn btn-link btn-sm p-0">View inventory</a>
+      </app-card>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <app-card title="Total products" [value]="inventory.products().length" icon="📦" />
+    </div>
+    <div class="col-12 col-md-6 col-lg-3">
+      <app-card title="Active shipments" [value]="activeShipments()" icon="🚚">
+        <a routerLink="/shipments" class="btn btn-link btn-sm p-0">View shipments</a>
+      </app-card>
+    </div>
   </div>
-  <div class="col-12 col-md-6 col-lg-3">
-    <app-card title="Shipments in transit" [value]="7" icon="🚚">
-      <small class="text-muted">Sample value</small>
-    </app-card>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-6">
+      <section class="dashboard__section">
+        <h2 class="h5">Quick stats - critical stock</h2>
+        <ul class="list-group">
+          @for (product of criticalProducts(); track product.id) {
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ product.sku }} {{ product.name }}</span>
+              <span class="badge text-bg-danger">{{ product.stock }} left</span>
+            </li>
+          } @empty {
+            <li class="list-group-item text-muted">No products with critical stock.</li>
+          }
+        </ul>
+      </section>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <section class="dashboard__section">
+        <h2 class="h5">Recent activity</h2>
+        <ul class="list-group">
+          @for (entry of inventory.recentActivity(); track $index) {
+            <li class="list-group-item">{{ entry }}</li>
+          } @empty {
+            <li class="list-group-item text-muted">
+              No activity yet - add or edit a product in Inventory.
+            </li>
+          }
+        </ul>
+      </section>
+    </div>
   </div>
 </div>
-
-<button type="button" class="btn btn-primary" (click)="testNotification()">
-  Test notification
-</button>

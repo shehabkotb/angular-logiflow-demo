@@ -34,6 +34,8 @@ export class InventoryService {
 
   sortBy = signal<SortBy>(loadSavedSort());
 
+  activity = signal<string[]>([]);
+
   visibleProducts = computed(() => {
     const filter = this.stockFilter();
     const sortBy = this.sortBy();
@@ -65,6 +67,8 @@ export class InventoryService {
     () => this.products().filter(p => p.stock <= LOW_STOCK).length
   );
 
+  recentActivity = computed(() => this.activity().slice(0, 5));
+
   constructor() {
     // persist sort order
     effect(() => {
@@ -89,23 +93,44 @@ export class InventoryService {
 
   addProduct(product: Omit<Product, 'id'>): Observable<Product> {
     return this.http.post<Product>(API_URL, product).pipe(
-      tap(created => this.products.update(list => [...list, created]))
+      tap(created => {
+        this.products.update(list => [...list, created]);
+        this.logActivity(`Added ${created.sku} ${created.name}`);
+      })
     );
   }
 
   updateProduct(product: Product): Observable<Product> {
     return this.http.put<Product>(`${API_URL}/${product.id}`, product).pipe(
-      tap(updated =>
+      tap(updated => {
         this.products.update(list =>
           list.map(p => (p.id === updated.id ? updated : p))
-        )
-      )
+        );
+        this.logActivity(`Updated ${updated.sku} ${updated.name}`);
+      })
     );
   }
 
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${API_URL}/${id}`).pipe(
-      tap(() => this.products.update(list => list.filter(p => p.id !== id)))
+      tap(() => {
+        // grab it before removing so we can log the name
+        const deleted = this.products().find(p => p.id === id);
+        this.products.update(list => list.filter(p => p.id !== id));
+        if (deleted) {
+          this.logActivity(`Deleted ${deleted.sku} ${deleted.name}`);
+        } else {
+          this.logActivity(`Deleted product #${id}`);
+        }
+      })
     );
+  }
+
+  private logActivity(message: string): void {
+    const time = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    this.activity.update(list => [`${time} - ${message}`, ...list]);
   }
 }
