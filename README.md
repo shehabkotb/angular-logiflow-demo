@@ -1,59 +1,57 @@
-# Logiflow
+# LogiFlow
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.27.
+A small inventory / warehouse dashboard built with Angular, made as a demo project.
+You can log in, see stock numbers on the dashboard, manage products (search, filter,
+sort, add, edit, delete), follow shipments and edit supplier contacts.
+The data comes from a local fake REST API (`json-server`) that reads `db.json`.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 19 - standalone components, signals, `@if` / `@for` / `@switch`
+- RxJS
+- Bootstrap 5 (CSS only) + SCSS
+- json-server 0.17 as the mock backend
+- Jasmine + Karma for unit tests, ESLint for linting
 
-```bash
-ng serve
-```
+## Getting started
 
-Once the server is running, open your browser and navigate to `http://127.0.0.1:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+You need [Node.js](https://nodejs.org/) (LTS).
 
 ```bash
-ng generate --help
+npm install
+
+# terminal 1 - mock API on http://127.0.0.1:3000
+npm run api
+
+# terminal 2 - app on http://127.0.0.1:4200
+npm start
 ```
 
-## Building
+Open http://127.0.0.1:4200 and log in with `admin` / `admin123`.
 
-To build the project run:
+The API has to be running, otherwise the pages show "Could not load data".
+Adding, editing and deleting products writes to `db.json` - run `git checkout db.json`
+to get the original data back.
 
-```bash
-ng build
+## Scripts
+
+| Command         | What it does                         |
+|-----------------|--------------------------------------|
+| `npm start`     | Dev server on http://127.0.0.1:4200  |
+| `npm run api`   | json-server on http://127.0.0.1:3000 |
+| `npm test`      | Unit tests (Karma + Chrome)          |
+| `npm run lint`  | ESLint                               |
+
+## Project structure
+
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+db.json              mock data (products, shipments, suppliers)
+src/app/
+  core/              auth service, guard, interceptor, notifications
+  models/            Product, Shipment, Supplier
+  services/          inventory, shipment and supplier services
+  shared/            card, modal, notification banner, stock highlight directive
+  validators/        SKU validator
+  layout/            sidebar + header
+  pages/             login, dashboard, inventory, shipments, suppliers
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
