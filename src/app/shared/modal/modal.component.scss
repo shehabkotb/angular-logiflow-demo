@@ -1,4 +1,20 @@
 .modal-overlay {
+  // bootstrap only defines these on .modal, which we don't use
+  --bs-modal-padding: 1rem;
+  --bs-modal-bg: var(--bs-body-bg);
+  --bs-modal-border-color: var(--bs-border-color-translucent);
+  --bs-modal-border-width: var(--bs-border-width);
+  --bs-modal-border-radius: var(--bs-border-radius-lg);
+  --bs-modal-box-shadow: var(--bs-box-shadow);
+  --bs-modal-inner-border-radius: calc(var(--bs-border-radius-lg) - var(--bs-border-width));
+  --bs-modal-header-padding: 1rem 1rem;
+  --bs-modal-header-border-color: var(--bs-border-color);
+  --bs-modal-header-border-width: var(--bs-border-width);
+  --bs-modal-title-line-height: 1.5;
+  --bs-modal-footer-gap: 0.5rem;
+  --bs-modal-footer-border-color: var(--bs-border-color);
+  --bs-modal-footer-border-width: var(--bs-border-width);
+
   position: fixed;
   inset: 0;
   z-index: 1050;
@@ -11,5 +27,11 @@
   &__dialog {
     width: 100%;
     max-width: 500px;
+    max-height: 100%;
+    overflow-y: auto;
+
+    .modal-content {
+      box-shadow: var(--bs-modal-box-shadow);
+    }
   }
 }
